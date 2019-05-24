@@ -283,4 +283,5 @@ Devise.setup do |config|
 
   config.reset_password_keys = [ :username ]
   config.confirmation_keys = [ :username ]
+  config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET'], scope: 'email'
 end
