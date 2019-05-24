@@ -54,5 +54,12 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'webpacker', '~> 3.5', '>= 3.5.5'
+
 gem 'react-rails', '~> 2.4', '>= 2.4.6'
+
 gem 'devise'
+
+gem 'omniauth-facebook'
+
+# Development ENV Variables
+gem 'figaro'
