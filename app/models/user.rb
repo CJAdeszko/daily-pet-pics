@@ -11,8 +11,8 @@ class User < ApplicationRecord
   validates_format_of :email, :with => Devise.email_regexp
   validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
 
-  validates :password, length: { minimum: 6 }, unless: "password.nil?"
-  validates :password, presence: true, if: "id.nil?"
+  validates :password, length: { minimum: 6 }
+  validates :password, presence: true
 
 
   def login
