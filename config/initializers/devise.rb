@@ -284,4 +284,7 @@ Devise.setup do |config|
   config.reset_password_keys = [ :username ]
   config.confirmation_keys = [ :username ]
   config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET'], scope: 'email'
+
+  #Allow unconfirmed access until mailer is set up for testing
+  config.allow_unconfirmed_access_for = 365.days
 end
