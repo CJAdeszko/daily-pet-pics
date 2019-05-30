@@ -1,10 +1,11 @@
 <%= content_tag :div, class: 'media', id: "comment-#{comment.id}" do %>
       <p><%= comment.body %></p>
+      <p><%= link_to "Reply", '#' %></p>
       <small>
         <%= comment.user.username %> commented <%= time_ago_in_words(comment.created_at) %> ago
         <% if current_user == comment.user %>
-          | <%= link_to "Delete", [comment.post, comment], method: :delete %>
-          | <%= link_to "Edit", edit_post_comment_path(@post, comment) %>
+          | <%= link_to "Delete", [comment.commentable, comment], method: :delete %>
+          | <%= link_to "Edit", edit_comment_path(comment.id) %>
         <% end %>
       </small>
 <% end %>

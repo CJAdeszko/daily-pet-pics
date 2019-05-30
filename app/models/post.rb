@@ -1,9 +1,9 @@
 class Post < ApplicationRecord
   belongs_to :user
   has_one_attached :image
-  has_many :taggings
+  has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
-  has_many :comments, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
 
   validates :title, presence: :true
   validates :image, presence: :true
