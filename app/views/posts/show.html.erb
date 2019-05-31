@@ -17,6 +17,7 @@
 </div>
 
 <div>
+  <%= render partial: 'votes/voting', locals: { post: @post } %>
   <h3>Comments</h3>
   <%= render @post.comments %>
 </div>

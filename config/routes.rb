@@ -1,12 +1,14 @@
 Rails.application.routes.draw do
   resources :posts do
     resources :comments
+    post '/up-vote' => 'votes#up_vote', as: :up_vote
+    post '/down-vote' => 'votes#down_vote', as: :down_vote
   end
 
   resources :comments do
     resources :comments
   end
-  
+
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   resources :users, only: :show
 

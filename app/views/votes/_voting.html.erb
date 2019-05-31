@@ -1,0 +1,7 @@
+<div>
+  <%= pluralize(post.points, 'point') %>
+  <div>
+    <%= link_to ('<i class="small material-icons">thumb_up</i>').html_safe, post_up_vote_path(post), method: :post %>
+    <%= link_to ('<i class="small material-icons">thumb_down</i>').html_safe, post_down_vote_path(post), method: :post %>
+  </div>
+</div>
