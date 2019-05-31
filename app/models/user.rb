@@ -56,4 +56,10 @@ class User < ApplicationRecord
   def favorite_for(post)
     favorites.where(post_id: post.id).first
   end
+
+
+  def favorite_tags
+    post = favorites.map { |fav| Post.find_by(id: fav.post_id) }
+    favorite_tags = post.map(&:tag_list).join(',').split(',')
+  end
 end

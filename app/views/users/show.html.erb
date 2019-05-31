@@ -1,1 +1,35 @@
-<%= @user.username %>
+<div>
+  <%= @user.username %>
+  Posts: <%= @user.posts.count %>
+  Comments: <%= @user.comments.count %>
+  Favorites: <%= @user.favorites.count %>
+</div>
+
+
+<% @user.favorite_tags.each do |tag| %>
+  <div class="chip">
+    <%=link_to tag, '#', class: "user_show_favorite_tag" %>
+  </div>
+<% end %>
+
+<div class="row">
+<% @user.favorites.select { |fav| true }.each do |favorite| %>
+  <% post = Post.find_by(id: favorite.post_id) %>
+
+
+
+  <div class="col s12 m3">
+    <div class="card">
+      <div class="card-image">
+        <%= image_tag(url_for(post.image)) %>
+      </div>
+      <div class="card-content">
+        <p><%= post.points %></p>
+      </div>
+      <div class="card-action">
+        <%= link_to(post.title, post_path(post)) %>
+      </div>
+    </div>
+  </div>
+<% end %>
+</div>

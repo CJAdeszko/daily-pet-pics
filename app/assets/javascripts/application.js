@@ -13,3 +13,14 @@
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
+//= require jquery
+
+$(document).ready(function() {
+  $(function() {
+    $('.user_show_favorite_tag').click( function() {
+      // Some complex code
+      alert('favorite tag click');
+      return false;
+    });
+  });
+});

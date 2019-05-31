@@ -65,3 +65,5 @@ gem 'omniauth-facebook'
 
 # Development ENV Variables
 gem 'figaro'
+
+gem 'jquery-rails', '~> 4.3', '>= 4.3.3'
