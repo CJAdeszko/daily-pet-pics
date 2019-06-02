@@ -8,6 +8,7 @@ class PostsController < ApplicationController
 
 
   def show
+    @post.update(post_views: @post.post_views+1)
   end
 
 
