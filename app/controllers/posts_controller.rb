@@ -3,11 +3,7 @@ class PostsController < ApplicationController
 
 
   def index
-    if params[:tag]
-      @posts = Post.tagged_with(params[:tag])
-    else
-      @posts = Post.all
-    end
+    @posts = Post.search(params[:search])
   end
 
 
@@ -68,6 +64,6 @@ class PostsController < ApplicationController
     end
 
     def post_params
-      params.require(:post).permit(:title, :image, :tag_list, :tag, { tag_ids: [] }, :tag_ids )
+      params.require(:post).permit(:title, :image, :tag_list, :tag, { tag_ids: [] }, :tag_ids, :search)
     end
 end

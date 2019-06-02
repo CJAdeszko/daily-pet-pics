@@ -34,6 +34,26 @@ class Post < ApplicationRecord
   end
 
 
+  def self.search(search)
+    if search
+      tag = Tag.find_by(name: search)
+      user = User.find_by(username: search)
+      title = Post.where(["title LIKE ?", "%#{search}%"])
+      if tag
+        tag.posts
+      elsif user
+        user.posts
+      elsif title
+        title
+      else
+        Post.all
+      end
+    else
+      Post.all
+    end
+  end
+
+
   def up_votes
     votes.where(value: 1).count
   end
