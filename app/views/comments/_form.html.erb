@@ -1,7 +1,16 @@
 <%= form_for [@post, comment] do |f| %>
   <div class="form-group">
     <%= f.label :body, "Comment" %><br/>
-    <%= f.text_field :body, class: 'form-control', placeholder: "Enter a new comment" %>
+    <%= f.text_field :body, class: 'form-control', placeholder: "Enter a new comment (or paste the reaction gif image url from gif search)" %>
   </div>
   <%= f.submit "Submit Comment", class: 'btn btn-default pull-right' %>
+  <button class='link_to_gif_reactions btn-small' >Search gif reactions</button>
+  <div style='width: 400px; height: 400px;'>
+    <div class="giphy" style='display: none'>
+      <input id="gif_search_text" placeholder="search gifs" type="search"></input>
+      <div class='row'>
+        <button class='btn-small' id='search_gif_submit' type="submit">search</button>
+      </div>
+    </div>
+  </div>
 <% end %>

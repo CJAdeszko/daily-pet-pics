@@ -15,12 +15,59 @@
 //= require_tree .
 //= require jquery
 
+
 $(document).ready(function() {
-  $(function() {
-    $('.user_show_favorite_tag').click( function() {
+  $(function(alert) {
+    $('.alert').observe( function() {
       // Some complex code
-      alert('favorite tag click');
+      //document.getElementById("notice").setAttribute("style", "display: block;");
+      M.toast({html: notice});
       return false;
     });
+  });
+});
+
+
+//MOBILE NAV INIT
+document.addEventListener('turbolinks:load', function() {
+  var elems = document.querySelectorAll('.sidenav');
+  var instances = M.Sidenav.init(elems);
+});
+
+// $(document).ready(function(){
+//   $(document).addEventListener('turbolinks:load', function() {
+//     $('.sidenav').sidenav();
+//   });
+// });
+
+
+//RETRIEVE GIFS
+$(document).ready(function(){
+  $('#search_gif_submit').on('click', function(event){
+      event.preventDefault();
+
+      $('img').remove('.giphy_gif');
+
+      var input = $('#gif_search_text').val();
+
+      var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=" + input + "&api_key=9A9x8hnTDvxuPLVhcP6YhG7IT5A0XMXj&limit=12");
+
+      xhr.done(function(response) { console.log("success got data", response);
+
+      var gifs = response.data;
+
+      for(i in gifs){
+        $('.giphy').append("<img src='"+gifs[i].images.original.url+"'class='giphy_gif' style='height:100px; width:100px;'/>")
+      }
+    });
+  });
+});
+
+
+//UNHIDE COMMENT GIF SEARCH
+$(document).ready(function(){
+  $('.link_to_gif_reactions').on('click', function(event) {
+    event.preventDefault();
+    $('.giphy').toggle();
   });
 });

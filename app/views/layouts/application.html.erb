@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>DailyPetPics</title>
+    <title>Daily Pet Pics</title>
     <%= csrf_meta_tags %>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css', media: 'all' %>
@@ -11,22 +12,66 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <!-- DESKTOP NAVBAR -->
+    <div class="navbar-fixed">
+      <nav class="deep-purple darken-4">
+        <div class="nav-wrapper">
+          <%= link_to 'Daily Pet Pics', root_path, :class => 'brand-logo left' %>
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <% if user_signed_in? %>
+              <li><%= current_user.username %></li>
+              <li><%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %></li>
+              <li><%= link_to 'View profile', user_path(current_user.id), :class => 'navbar-link' %></li>
+              <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %></li>
+            <% else %>
+              <li><%= link_to 'Home', root_path, :class => 'navbar-link' %></li>
+              <li><%= link_to "Sign Up", new_user_registration_path, :class => 'navbar-link'  %></li>
+              <li><%= link_to "Sign In", new_user_session_path, :class => 'navbar-link'  %></li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>
+    </div>
 
-    <% if user_signed_in? %>
-      Signed in as: <strong><%= current_user.email %></strong> |
-      <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> - <%= link_to "Sign Out", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-      <%= link_to 'View profile', user_path(current_user.id), :class => 'navbar-link' %>
-    <% else %>
-      <%= link_to 'Home', root_path, :class => 'navbar-link' %>
-      <%= link_to "Sign Up", new_user_registration_path, :class => 'navbar-link'  %> -
-      <%= link_to "Sign In", new_user_session_path, :class => 'navbar-link'  %>
-      <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
-    <% end %>
+
+    <!-- MOBILE NAVBAR -->
+    <ul class="sidenav" id="mobile-demo">
+      <% if user_signed_in? %>
+        <li><%= current_user.username %></li>
+        <li><%= link_to 'Edit profile', edit_user_registration_path %></li>
+        <li class="divider"></li>
+        <li><%= link_to 'View profile', user_path(current_user.id) %></li>
+        <li class="divider"></li>
+        <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+        <li class="divider"></li>
+      <% else %>
+        <li><%= link_to 'Home', root_path %></li>
+        <li class="divider"></li>
+        <li><%= link_to "Sign Up", new_user_registration_path %></li>
+        <li class="divider"></li>
+        <li><%= link_to "Sign In", new_user_session_path %></li>
+        <li class="divider"></li>
+      <% end %>
+    </ul>
+
+    <!--MAIN CONTENT -->
+    <main>
+      <!-- MAIN CONTAINER -->
+      <div class="container">
+        <%= yield %>
+      </div>
+    </main>
 
 
-    <%= yield %>
+    <!-- FOOTER -->
+    <footer class="page-footer deep-purple darken-4">
+          <div class="footer-copyright"
+            <div class="container"
+              <span class="left-align">© 2019 CJAdeszko</span>
+            </div>
+          </div>
+    </footer>
 
     <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js' %>
   </body>

@@ -18,7 +18,6 @@ Rails.application.routes.draw do
 
   get 'welcome/about'
 
-  root 'welcome#index'
+  root 'posts#index'
 
-  get 'tags/:tag', to: 'posts#index', as: :tag
 end

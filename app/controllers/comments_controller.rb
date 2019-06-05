@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @comment.assign_attributes(comment_params)
     @post = Post.find_by_id(@comment.commentable.id)
-    
+
     if @comment.save
       flash[:notice] = "Comment updated successfully."
       redirect_to @post

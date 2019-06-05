@@ -1,5 +1,5 @@
 <%= content_tag :div, class: 'media', id: "comment-#{comment.id}" do %>
-      <p><%= comment.body %></p>
+      <p><%= convert_to_image_tag(comment.body) %></p>
       <p><%= link_to "Reply", '#' %></p>
       <small>
         <%= comment.user.username %> commented <%= time_ago_in_words(comment.created_at) %> ago
