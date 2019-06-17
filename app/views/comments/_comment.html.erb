@@ -1,11 +1,31 @@
 <%= content_tag :div, class: 'media', id: "comment-#{comment.id}" do %>
-      <p><%= convert_to_image_tag(comment.body) %></p>
-      <p><%= link_to "Reply", '#' %></p>
-      <small>
-        <%= comment.user.username %> commented <%= time_ago_in_words(comment.created_at) %> ago
-        <% if current_user == comment.user %>
-          | <%= link_to "Delete", [comment.commentable, comment], method: :delete %>
-          | <%= link_to "Edit", edit_comment_path(comment.id) %>
+      <!-- POST COMMENT -->
+      <div class='comment z-depth-1' style='margin-bottom: 10px; padding: 7px;' >
+        <p><%= convert_to_image_tag(comment.body) %></p>
+
+        <small>
+          <%= comment.user.username %> commented <%= time_ago_in_words(comment.created_at) %> ago
+          <% if comment.updated_at != comment.created_at %>
+            *edited*
+          <% end %>
+          <% if current_user == comment.user %>
+            | <%= link_to "Delete", [comment.commentable, comment], method: :delete %>
+            | <%= link_to "Edit", edit_comment_path(comment.id) %>
+          <% end %>
+        </small>
+      </div>
+
+      <!-- COMMENT REPLY FORM -->
+      <% if current_user %>
+        <p><%= link_to "Reply", '', id:"comment_#{comment.id}_reply_link" %></p>
+        <%= content_tag :div, id: "comment_#{comment.id}_reply_link_partial", style: "display: none;" do %>
+          <%= render partial: 'comments/form', locals: { commentable: comment }%>
         <% end %>
-      </small>
+      <% end %>
+
+
+      <!-- COMMENT REPLIES -->
+      <div class="comment_replies" style='margin-left:40px;'>
+        <%= render comment.comments %>
+      </div>
 <% end %>

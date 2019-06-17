@@ -1,1 +1,6 @@
-<%= render partial: 'form', locals: { post: @post, comment: @comment } %>
+<%= form_for @comment do |f| %>
+  <div class="form-group">
+    <%= f.text_field :body, class: 'form-control', placeholder: "Enter a new comment (or paste the reaction gif image url from gif search)" %>
+  </div>
+  <%= f.submit "Submit Comment", class: 'btn-small pull-right light-blue lighten-2', :data => { disable_with: false } %>
+<% end %>

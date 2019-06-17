@@ -11,21 +11,20 @@
 // about supported directives.
 //
 //= require rails-ujs
-//= require turbolinks
 //= require_tree .
 //= require jquery
 
 
-$(document).ready(function() {
-  $(function(alert) {
-    $('.alert').observe( function() {
-      // Some complex code
-      //document.getElementById("notice").setAttribute("style", "display: block;");
-      M.toast({html: notice});
-      return false;
-    });
-  });
-});
+// $(document).ready(function() {
+//   $(function(alert) {
+//     $('.alert').observe( function() {
+//       // Some complex code
+//       //document.getElementById("notice").setAttribute("style", "display: block;");
+//       M.toast({html: notice});
+//       return false;
+//     });
+//   });
+// });
 
 
 //MOBILE NAV INIT
@@ -43,21 +42,23 @@ document.addEventListener('turbolinks:load', function() {
 
 //RETRIEVE GIFS
 $(document).ready(function(){
-  $('#search_gif_submit').on('click', function(event){
+  $("[id^='comment_'][id$='search_gif_submit']").on('click', function(event){
       event.preventDefault();
 
       $('img').remove('.giphy_gif');
 
-      var input = $('#gif_search_text').val();
+      var input = event.originalEvent.path[2].childNodes[1].value;
 
-      var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=" + input + "&api_key=9A9x8hnTDvxuPLVhcP6YhG7IT5A0XMXj&limit=12");
+      var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=" + input + "&api_key=9A9x8hnTDvxuPLVhcP6YhG7IT5A0XMXj&limit=12/data/images/downsized");
 
       xhr.done(function(response) { console.log("success got data", response);
 
       var gifs = response.data;
 
+      var giphyDivId = event.currentTarget.parentElement.parentElement.id;
+
       for(i in gifs){
-        $('.giphy').append("<img src='"+gifs[i].images.original.url+"'class='giphy_gif' style='height:100px; width:100px;'/>")
+        $('#' + giphyDivId).append("<img src='"+gifs[i].images.original.url+"'class='giphy_gif' style='height:100px; width:100px;'/>")
       }
     });
   });
@@ -66,8 +67,25 @@ $(document).ready(function(){
 
 //UNHIDE COMMENT GIF SEARCH
 $(document).ready(function(){
-  $('.link_to_gif_reactions').on('click', function(event) {
+  $("[id^='comment_'][id$='link_to_gif_reactions']").on('click', function(event) {
     event.preventDefault();
-    $('.giphy').toggle();
+
+    var commentableDivId = event.currentTarget.id.match(/(\d)+/g);
+
+    var giphyDivId = "commentable_" + commentableDivId[0] + "_giphy";
+
+    $('#' + giphyDivId).toggle();
+  });
+});
+
+
+//UNHIDE COMMENT REPLY
+$(document).ready(function(){
+  $("[id^='comment_'][id$='reply_link']").on('click', function(event) {
+    event.preventDefault();
+    var replyLinkId = event.currentTarget.id;
+    var partialId = replyLinkId + "_partial";
+    $('#' + partialId).toggle();
+    $('#post_comment_partial').toggle();
   });
 });

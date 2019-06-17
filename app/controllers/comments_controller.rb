@@ -12,10 +12,10 @@ class CommentsController < ApplicationController
 
     if @comment.save
       flash[:notice] = "Comment saved successfully."
-      redirect_to [@commentable]
+      redirect_back(fallback_location: root_path)
     else
       flash[:alert] = "Comment failed to save."
-      redirect_to [@commentable]
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -28,7 +28,13 @@ class CommentsController < ApplicationController
   def update
     @comment = Comment.find(params[:id])
     @comment.assign_attributes(comment_params)
-    @post = Post.find_by_id(@comment.commentable.id)
+
+    if @comment.commentable_type == 'Post'
+      @post = Post.find_by_id(@comment.commentable_id)
+    else
+      parent_comment = Comment.find_by_id(@comment.commentable_id)
+      @post = Post.find_by_id(parent_comment.commentable_id)
+    end
 
     if @comment.save
       flash[:notice] = "Comment updated successfully."
@@ -45,10 +51,10 @@ class CommentsController < ApplicationController
 
     if @comment.destroy
       flash[:notice] = "Comment was deleted."
-      redirect_to [@commentable]
+      redirect_back(fallback_location: root_path)
     else
       flash[:alert] = "Comment couldn't be deleted. Try again."
-      redirect_to [@commentable]
+      redirect_back(fallback_location: root_path)
     end
   end
 

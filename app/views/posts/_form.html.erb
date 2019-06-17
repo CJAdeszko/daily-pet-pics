@@ -21,12 +21,12 @@
     <%= form.file_field :image %>
   </div>
 
-  <div class="field">
+  <div class="field" >
     <%= form.label :tag_list, "Tags" %>
-    <%= form.text_field :tag_list %>
+    <%= form.text_field :tag_list, placeholder: "Enter tags separated by a comma..." %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'btn light-blue lighten-2'%>
   </div>
 <% end %>

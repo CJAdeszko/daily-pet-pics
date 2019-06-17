@@ -1,16 +1,20 @@
-<%= form_for [@post, comment] do |f| %>
+<%= form_for [commentable, Comment.new] do |f| %>
   <div class="form-group">
-    <%= f.label :body, "Comment" %><br/>
-    <%= f.text_field :body, class: 'form-control', placeholder: "Enter a new comment (or paste the reaction gif image url from gif search)" %>
+    <% if commentable.class == Post %>
+      <%= f.text_field :body, class: 'form-control', placeholder: "Enter a new comment (or paste the reaction gif image url from gif search)" %>
+    <% else %>
+      <%= f.text_field :body, class: 'form-control', placeholder: "Enter a new reply (or paste the reaction gif image url from gif search)" %>
+    <% end %>
   </div>
-  <%= f.submit "Submit Comment", class: 'btn btn-default pull-right' %>
-  <button class='link_to_gif_reactions btn-small' >Search gif reactions</button>
-  <div style='width: 400px; height: 400px;'>
-    <div class="giphy" style='display: none'>
-      <input id="gif_search_text" placeholder="search gifs" type="search"></input>
+  <%= f.submit "Submit Comment", class: 'btn-small pull-right light-blue lighten-2', style: 'margin-bottom: 5px;', :data => { disable_with: false } %>
+  <%= f.button "Search gif reactions", class: 'btn-small light-blue lighten-2', id: "comment_#{commentable.id}_link_to_gif_reactions", style: 'margin-bottom: 5px;'%>
+
+  <div class="row">
+    <%= content_tag :div, class: "col s12 m8", id: "commentable_#{commentable.id}_giphy", style: 'display: none; margin-bottom: 20px;' do %>
+      <%= text_field_tag "gif_search_text_#{commentable.id}", nil,  placeholder: "search gifs", type: "search" %>
       <div class='row'>
-        <button class='btn-small' id='search_gif_submit' type="submit">search</button>
+        <%= f.button "search", class: 'btn-small light-blue lighten-2', id: "comment__#{commentable.id}_search_gif_submit", type: "submit" %>
       </div>
-    </div>
+    <% end %>
   </div>
 <% end %>

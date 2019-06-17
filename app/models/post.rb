@@ -67,4 +67,8 @@ class Post < ApplicationRecord
   def points
     votes.sum(:value)
   end
+
+  def fix_exif_rotation(image)
+    return image.variant(auto_orient: true).processed
+  end
 end

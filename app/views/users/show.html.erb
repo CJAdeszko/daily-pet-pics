@@ -1,3 +1,4 @@
+<!-- USER INFO -->
 <div class="row" id="user_info">
   <div class="container center-align">
     <div class="card col s4" id="user_info_card">
@@ -10,31 +11,40 @@
 </div>
 
 
+<!-- FAVORITE POST TAGS -->
+<h6>Favorite tags:</h6>
 <% @user.favorite_tags.each do |tag| %>
-  <div class="chip">
-    <%=link_to tag, "?tag=#{tag}", class: "user_show_favorite_tag" %>
+  <div class="chip light-blue accent-3">
+    <% if tag != nil %>
+      <%=link_to tag, "?tag=#{tag}", class: "user_show_favorite_tag white-text" %>
+    <% end %>
   </div>
 <% end %>
 
 
+<!-- FAVORITED POSTS -->
 <div class="row">
   <% @user.favorites.select { |fav| request.query_parameters["tag"].nil? || fav.post.tag_list.include?(request.query_parameters["tag"]) }.each do |favorite| %>
     <% post = Post.find_by(id: favorite.post_id) %>
     <div class="col s12 m3">
-      <div class="card">
-        <div class="card-image">
-          <%= image_tag(url_for(post.image)) %>
+      <%= link_to(post_path(post)) do %>
+        <div class="card">
+          <div class="card-image">
+              <%= image_tag(url_for(post.fix_exif_rotation(post.image))) %>
+          </div>
+          <div class="card-action blue-text text-darken-4">
+            <h5 class="truncate"><%= post.title %></h5>
+          </div>
+          <div class="card-content blue-text text-darken-4">
+            <span>
+              <i class="tiny material-icons">thumb_up</i> <%= post.points %>
+              <i class="tiny material-icons">visibility</i> <%= post.post_views %>
+              <i class="tiny material-icons">chat_bubble</i> <%= post.comments.count %>
+              <i class="tiny material-icons">favorite</i> <%= post.favorites.count %>
+            </span>
+          </div>
         </div>
-        <div class="card-action">
-          <%= link_to(post.title, post_path(post)) %>
-        </div>
-        <div class="card-content">
-          <span>
-            <i class="tiny material-icons">thumb_up</i> <%= post.points %>
-            <i class="tiny material-icons">visibility</i> <%= post.post_views %>
-          </span>
-        </div>
-      </div>
+      <% end %>
     </div>
   <% end %>
 </div>
