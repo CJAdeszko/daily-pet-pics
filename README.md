@@ -1,24 +1,17 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Daily Pet Pics is a self-guided project to solidify technical skills in Ruby on Rails, JavaScript, and jQuery.
 
-Things you may want to cover:
+It is a imgur type web app that has the following functionality:
 
-* Ruby version
+  * Sign up - users can create an account using their email address or authenticate using their Facebook
 
-* System dependencies
+  * Posts - authenticated users can create posts of their pets with an image, title, and tags
 
-* Configuration
+  * Comments - authenticated users can comment on posts and reply to other users comments
 
-* Database creation
+  * GIF API - authenticated users have the ability to search for reaction GIFs on posts using the giphy API
 
-* Database initialization
+  * Favorites - authenticated users can up vote, down vote, or a favorite posts. Favorited posts are displayed on the 'view profile' page and can be searched for or filtered by their associated tags
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  * Search - users can search for posts based on username, title, or tags
