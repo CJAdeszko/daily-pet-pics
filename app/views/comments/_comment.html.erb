@@ -17,7 +17,7 @@
 
       <!-- COMMENT REPLY FORM -->
       <% if current_user %>
-        <p><%= link_to "Reply", '', id:"comment_#{comment.id}_reply_link" %></p>
+        <p><%= link_to "Reply to #{comment.user.username}...", '', id:"comment_#{comment.id}_reply_link" %></p>
         <%= content_tag :div, id: "comment_#{comment.id}_reply_link_partial", style: "display: none;" do %>
           <%= render partial: 'comments/form', locals: { commentable: comment }%>
         <% end %>

@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-
+  before_action :authorize_user, only: [:edit, :update, :destroy]
 
   def index
     @posts = Post.search(params[:search])
@@ -66,5 +66,13 @@ class PostsController < ApplicationController
 
     def post_params
       params.require(:post).permit(:title, :image, :tag_list, :tag, { tag_ids: [] }, :tag_ids, :search)
+    end
+
+    def authorize_user
+      post = Post.find(params[:id])
+      unless current_user == post.user
+        flash[:alert] = "You do not have permission to update this post."
+        redirect_to post
+      end
     end
 end

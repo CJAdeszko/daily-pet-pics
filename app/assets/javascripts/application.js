@@ -26,9 +26,21 @@
 //   });
 // });
 
+//SCROLL TO & DISMISS FLASH MESSAGES
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+
+$(document).ready(function() {
+  setTimeout(function() {
+    $('#flash').slideUp();
+  }, 4000);
+});
+
 
 //MOBILE NAV INIT
-document.addEventListener('turbolinks:load', function() {
+document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.sidenav');
   var instances = M.Sidenav.init(elems);
 });
@@ -86,6 +98,13 @@ $(document).ready(function(){
     var replyLinkId = event.currentTarget.id;
     var partialId = replyLinkId + "_partial";
     $('#' + partialId).toggle();
-    $('#post_comment_partial').toggle();
   });
 });
+
+//UNHIDE COMMENT
+$(document).ready(function(){
+  $("#post_comment_link").on('click', function(event){
+    event.preventDefault();
+    $('#post_comment_partial').toggle();
+  })
+})

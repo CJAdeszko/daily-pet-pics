@@ -50,7 +50,9 @@
     <%= render @post.comments %>
 
     <% if current_user %>
-      <div id='post_comment_partial'>
+    <p><%= link_to "Leave a comment...", '', id:"post_comment_link" %></p>
+
+      <div id='post_comment_partial' style="display: none;">
         <%= render partial: 'comments/form', locals: { commentable: @post }%>
       </div>
     <% end %>

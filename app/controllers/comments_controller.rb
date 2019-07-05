@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :find_commentable
+  before_action :authorize_user, only: [:edit, :update, :destroy]
 
   def new
     @comment = Comment.new
@@ -68,5 +69,13 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:body)
+  end
+
+  def authorize_user
+    comment = Comment.find(params[:id])
+    unless current_user == comment.user
+      flash[:alert] = "You do not have permission to do that."
+      redirect_to root_path
+    end
   end
 end
